@@ -1,0 +1,10 @@
+liip_imagine:
+    # configure webp
+    webp:
+        generate: true
+
+    # example filter
+    filter_sets:
+        thumbnail_web_path:
+            filters:
+                thumbnail: { size: [223, 223], mode: inset }

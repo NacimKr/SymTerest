@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PinsController!{% endblock %}
+
+{% block body %}
+    {{ include('./layouts/partials/_flash_message.html.twig') }}
+    <h1 class="text-center my-5 fw-bold">{{ pluralize(pins|length, ' pins', ' pin') }}</h1>
+    
+    <div class="row">
+        {% for pin in pins %}
+            <div class="col-md-4">
+                <article class="shadow m-3" style="max-height:550px; min-height:500px">
+                    {% if pin.imagename %}
+                    <div class="overflow-hidden rounded-top">
+                        <a id="animate-img" href="{{ path('app_show', {id:pin.id}) }}">
+                            <img src="{{ asset('./images/products/'~pin.imagename) | imagine_filter('thumbnail_web_path') }}" class="w-100 rounded-top h-75"/> 
+                        </a>
+                    </div>
+                    {% else %}
+                        <a id="animate-img" href="{{ path('app_show', {id:pin.id}) }}">
+                        <img src="{{ asset('./no-available/no-available.png') | imagine_filter('thumbnail_web_path') }}" class="w-100 rounded-top"/> 
+                        </a>
+                    {% endif %}             
+                    <div class="p-3">
+                        <h3>{{pin.title}}</a></h3> 
+                        <p class="text-break">{{ pin.description|u.truncate(5, '...', false)  }}</p>
+                        {# <a class="btn btn-danger" href="{{ path('app_delete', {id:pin.id}) }}">Delete</a> #}
+                        {# <p class="text-muted"><small>Submitted at <b>{{ pin.createdAt|ago }}</b> by {{pin.user.fullName}}</small></p> #}
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

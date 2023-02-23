@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title "Pin Index" %}
+
+{% block body %}
+    <h1 class="text-center">Admin Pins Index</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Admin Lorem ipsum dolor sit amet.</p>
+    {% endif %}
+    
+{% endblock %}

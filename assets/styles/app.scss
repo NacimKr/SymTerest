@@ -1,0 +1,41 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+@import './shared/_variables.scss';
+
+ 
+ *{
+    font-family: 'Montserrat', sans-serif;
+}
+
+main{
+    // & h1{
+    //     color:$rouge;
+    // }
+    & a{
+        text-decoration: none;
+    }
+
+    .vich-image{
+
+        & .form-check{
+            @extend .my-3;
+        }
+
+        & a{
+          & img{
+            @extend .mx-auto, .d-block, .border;
+            @extend .shadow-lg;
+            @extend .rounded;
+          }  
+        }
+    }
+
+    #animate-img img{
+        &:hover{
+            transform: scale(1.075);
+            transition: transform .5s ease;
+            border-radius:10px;
+        }
+    }
+
+}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1 class="my-5 text-center">Create an account</h1>
+
+            {{ form_start(registrationForm) }}
+                <div class="row">    
+                    <div class="col">
+                        {{ form_label(registrationForm.firstName) }}
+                        {{ form_widget(registrationForm.firstName) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <button type="submit" class="btn btn-primary">Register</button>
+                {# 
+                    Avant d'afficher la fin du fomulaire avec le form_end il affiche tout les champs
+                    defini dans le registration type meme s'il sont pas appelé dans le fichier twig
+                #}
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+{% endblock %}

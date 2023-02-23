@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+{{ include('./layouts/partials/_flash_message.html.twig') }}
+    <div class="col">
+        <div class="col-md-6 mx-auto text-center">
+            <h1 class="my-5">Profile</h1>
+
+            <img class="rounded-5" src='https://www.gravatar.com/avatar/'~{hash} alt="">
+            <p class="mt-4">{{ app.user.email }}</p>
+            <h2 class="my-3">{{ app.user.firstName }} {{ app.user.lastName }}</h2>
+            <small class="d-block mb-3">Account created on {{ app.user.createdat|date('d/m/Y') }}</small>
+            {# {{ dump(app.user) }} #}
+            
+            <a href="{{ path('app_edit_account') }}">Edit Account</a> 
+            | 
+            <a href="{{ path('app_account_password') }}">Change Password</a>
+        </div>
+    </div>
+{% endblock %}

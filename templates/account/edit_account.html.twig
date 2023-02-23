@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Edit Profile' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto text-center">
+            <h1 class="my-5">Edit Profile</h1>
+
+
+
+            {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{form_row(form.firstName)}}
+                    </div>
+                    <div class="col-md-6">
+                        {{form_row(form.lastName)}}
+                    </div>
+                </div>
+
+                {# form_re st permet d'afficher le reste du formulaire qu'on a pas personnalisé  #}
+                {{ form_rest(form) }}
+
+
+                <input type="submit" value="Edit Profile" class="btn btn-primary btn-block">
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}

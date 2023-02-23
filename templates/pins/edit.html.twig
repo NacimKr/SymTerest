@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Edit PINS #{{pin.id}}</h1>
+
+    {# {% set submitButtonText = "Save Pin" %} #}
+    {{ include("./layouts/partials/_form.html.twig", {submitButtonText : "Save Pin"}) }}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Hello PinsController!{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center">Create Pin</h1>
+
+    {# {% set submitButtonText = "Create Pin" %} #}
+    {{ include("./layouts/partials/_form.html.twig", {submitButtonText : "Create Pin"} ) }}
+
+{% endblock %}

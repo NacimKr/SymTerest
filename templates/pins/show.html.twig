@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PinsController!{% endblock %}
+
+{% block body %}
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <article class=" rounded shadow m-3" style="max-height:550px; min-height:500px">
+                    {% if pin.imagename %}
+                    <div class="overflow-hidden rounded-top">
+                        <a id="animate-img" href="#">
+                            <img src="{{ asset('./images/products/'~pin.imagename) | imagine_filter('thumbnail_web_path') }}" class="w-100 h-75"/> 
+                        </a>
+                    </div>
+                    {% else %}
+                        <img src="{{ asset('./no-available/no-available.png') | imagine_filter('thumbnail_web_path') }}" class="w-100 rounded-top"/> 
+                    {% endif %}             
+                    <div class="p-3">
+                        <h3>{{pin.title}}</a></h3> 
+                        <p class="text-break">{{ pin.description|u.truncate(5, '...', false)  }}</p>
+                        <p class="text-muted"><small>Submitted at <b>{{ pin.createdAt|ago }}</b> by {{pin.user.fullName}}</small></p>
+                    
+                    {% if app.user == pin.user %}
+                        <a class="btn btn-warning" href="{{ path('app_edit', {id:pin.id}) }}">Edit</a>
+                        <a class="btn btn-warning" onclick="confirm('Êtes-vous sûr de vouloir supprimer ce pins ?');"
+                            href="{{ path('app_delete', {id:pin.id}) }}">Delete</a>
+                        <a class="btn btn-danger" href="{{ path('app_home') }}">Go Back</a>
+                    {% endif %}
+
+                    </div>
+
+                </article>
+            </div>
+        </div>
+
+{% endblock %}
