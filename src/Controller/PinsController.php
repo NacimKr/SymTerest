@@ -44,13 +44,12 @@ class PinsController extends AbstractController
 
 
     #[Route('/create/pins', name:"app_create",  methods:['GET','POST'])]
-    #[Security(
-        "is_granted('ROLE_USER') and user.isVerified()", 
-        message:"Non", 
-        statusCode:"404"
-    )]
+    // #[Security("is_granted('ROLE_USER') and user.isVerified()")]
+    //ou on passe par le voter qu'on vient de créer
+    #[Security("is_granted('PIN_CREATE', pin)")]
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository):Response
     {
+        
         /* 
             Pour reduire l'ecriture de la ligne ci-dessous
             on peut utiliser l'annotation Security qui est au-dessus où
@@ -64,6 +63,8 @@ class PinsController extends AbstractController
         //     $this->addFlash('warning', "You need to verified your email !");
         //     return $this->redirectToRoute("app_home");
         // }
+
+        //$this->denyAccessUnlessGranted("ROLE_USER",null, "Vous devez verifier votre compte");
 
         if(!$this->getUser()){
             throw $this->createAccessDeniedException("You cannot access to this page");
@@ -113,17 +114,17 @@ class PinsController extends AbstractController
     // #[Security('is_granted("ROLE_USER") && user.isVerified()')]
     public function show(Pin $pin): Response
     {
-        if(!$this->getUser()){
-            $this->addFlash('warning', "You need to log in !");
-            return $this->redirectToRoute("app_login");
-        }elseif(!$this->getUser()->isVerified()){
-            $this->addFlash('warning', "You need to verified !");
-            return $this->redirectToRoute("app_home");
-        }
+        // if(!$this->getUser()){
+        //     $this->addFlash('warning', "You need to log in !");
+        //     return $this->redirectToRoute("app_login");
+        // }elseif(!$this->getUser()->isVerified()){
+        //     $this->addFlash('warning', "You need to verified !");
+        //     return $this->redirectToRoute("app_home");
+        // }
 
-        if(!$pin){
-            throw $this->createNotFoundException("Pins introuvable !");
-        }
+        // if(!$pin){
+        //     throw $this->createNotFoundException("Pins introuvable !");
+        // }
 
         return $this->render('pins/show.html.twig',[
             'pin' => $pin
@@ -133,24 +134,25 @@ class PinsController extends AbstractController
 
 
     #[Route('/edit/pins/{id<[0-9]+>}', name:"app_edit", methods:['GET','POST'])]
-    #[Security('is_granted("ROLE_USER") && user.isVerified()', message:"Hello", statusCode:"404")]
+    //PIN_EDIT est une permission qu'on vient de créer du coup faudra qu'on créer un voter pour gérer PIN_EDIT
+    #[Security('is_granted("PIN_EDIT", pin)')]
     public function edit(Pin $pin, Request $request, EntityManagerInterface $em):Response
     {
 
-        if(!$this->getUser()){
-            $this->addFlash('warning', "You need to log in !");
-            return $this->redirectToRoute("app_login");
-        }elseif(!$this->getUser()->isVerified()){
-            $this->addFlash('warning', "You need to verified !");
-            return $this->redirectToRoute("app_home");
-        }
+        // if(!$this->getUser()){
+        //     $this->addFlash('warning', "You need to log in !");
+        //     return $this->redirectToRoute("app_login");
+        // }elseif(!$this->getUser()->isVerified()){
+        //     $this->addFlash('warning', "You need to verified !");
+        //     return $this->redirectToRoute("app_home");
+        // }
 
         //Là on verifie si l'utilisateur est différent de celui qui est connecté
         //Donc check si on est bien l'auteur du pin qu'on veut modifier sinon on le redirige vers l'accueil
-        if($this->getUser() != $pin->getUser()){
-            $this->addFlash('danger', "You are not a author of that pins");
-            return $this->redirectToRoute("app_home");
-        }
+        // if($this->getUser() != $pin->getUser()){
+        //     $this->addFlash('danger', "You are not a author of that pins");
+        //     return $this->redirectToRoute("app_home");
+        // }
 
         $form = $this->createForm(PinType::class, $pin);
 
@@ -173,7 +175,9 @@ class PinsController extends AbstractController
 
     
     #[Route('/pins/delete/{id<[0-9]+>}', name:"app_delete", methods:['GET','DELETE'])]
-    #[Security('is_granted("ROLE_USER") && user.isVerified()')]
+    // #[Security('is_granted("ROLE_USER") && user.isVerified() && pin.getUser() === user')]
+    //ou on passe par le voter qu'on de créer
+    #[Security('is_granted("PIN_DELETE", pin)')]
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em)
     {
 
