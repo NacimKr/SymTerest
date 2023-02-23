@@ -43,8 +43,8 @@ security:
     #Pour la partie autorisation disant qu'il faut etre admin ou un user
     #pour accéder a tel et tel page
     access_control: # -->pour gérer l'autorisation
-        #- { path: ^/admin, roles: ROLE_USER }
-        #- { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/account, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:

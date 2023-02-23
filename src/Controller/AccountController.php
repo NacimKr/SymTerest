@@ -13,10 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/account')]
-#[IsGranted('ROLE_USER')]
 class AccountController extends AbstractController
 {
-    #[Route('/your-account', name: 'app_account', methods:"GET")]
+    #[Route('/', name: 'app_account', methods:"GET")]
     public function show(): Response
     {
         //Controle de securité afin de pas laisser
@@ -42,7 +41,7 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/account',  name:"app_edit_account", methods:['GET','POST'])]
+    #[Route('/edit',  name:"app_edit_account", methods:['GET','POST'])]
     public function edit(Request $request, EntityManagerInterface $em):Response
     {
         //this->getUser() pour recueprer l'utilisateur connecter dans un controller
