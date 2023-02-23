@@ -46,7 +46,7 @@ class PinsController extends AbstractController
     #[Route('/create/pins', name:"app_create",  methods:['GET','POST'])]
     // #[Security("is_granted('ROLE_USER') and user.isVerified()")]
     //ou on passe par le voter qu'on vient de créer
-    #[Security("is_granted('PIN_CREATE', pin)")]
+    #[Security("is_granted('MANAGE', pin)")]
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository):Response
     {
         
@@ -135,7 +135,7 @@ class PinsController extends AbstractController
 
     #[Route('/edit/pins/{id<[0-9]+>}', name:"app_edit", methods:['GET','POST'])]
     //PIN_EDIT est une permission qu'on vient de créer du coup faudra qu'on créer un voter pour gérer PIN_EDIT
-    #[Security('is_granted("PIN_EDIT", pin)')]
+    #[Security('is_granted("MANAGE", pin)')]
     public function edit(Pin $pin, Request $request, EntityManagerInterface $em):Response
     {
 
@@ -177,7 +177,7 @@ class PinsController extends AbstractController
     #[Route('/pins/delete/{id<[0-9]+>}', name:"app_delete", methods:['GET','DELETE'])]
     // #[Security('is_granted("ROLE_USER") && user.isVerified() && pin.getUser() === user')]
     //ou on passe par le voter qu'on de créer
-    #[Security('is_granted("PIN_DELETE", pin)')]
+    #[Security('is_granted("MANAGE", pin)')]
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em)
     {
 

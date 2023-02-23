@@ -22,7 +22,7 @@ class PinVoter extends Voter
         // https://symfony.com/doc/current/security/voters.html
 
         //si l'attribut fait partie de l'un de ces valeur alors on instance l'objet
-        return in_array($attribute, [self::EDIT,self::CREATE,self::DELETE])
+        return in_array($attribute, ["MANAGE"])
             && $subject instanceof \App\Entity\Pin;
     }
 
@@ -37,18 +37,18 @@ class PinVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case self::EDIT:
+            case "MANAGE":
                 return $user->isVerified() && $user === $mypin->getUser();               // logic to determine if the user can EDIT
                 // return true or false
                 break;
 
-            case self::CREATE:
-                return $user->isVerified() && $user === $mypin->getUser(); 
-                break;
+            // case self::CREATE:
+            //     return $user->isVerified() && $user === $mypin->getUser(); 
+            //     break;
 
-            case self::DELETE:
-                return $user->isVerified() && $user === $mypin->getUser(); 
-                break;
+            // case self::DELETE:
+            //     return $user->isVerified() && $user === $mypin->getUser(); 
+            //     break;
         }
 
         return false;

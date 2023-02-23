@@ -20,7 +20,9 @@
                         <p class="text-break">{{ pin.description|u.truncate(5, '...', false)  }}</p>
                         <p class="text-muted"><small>Submitted at <b>{{ pin.createdAt|ago }}</b> by {{pin.user.fullName}}</small></p>
                     
-                    {% if app.user == pin.user %}
+                    {# {% if app.user == pin.user %} #}
+                    {# OU "MANAGE depuis le voter qu'on vient de créer" #}
+                    {% if is_granted("MANAGE",pin) %}
                         <a class="btn btn-warning" href="{{ path('app_edit', {id:pin.id}) }}">Edit</a>
                         <a class="btn btn-warning" onclick="confirm('Êtes-vous sûr de vouloir supprimer ce pins ?');"
                             href="{{ path('app_delete', {id:pin.id}) }}">Delete</a>
